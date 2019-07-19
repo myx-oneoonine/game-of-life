@@ -1,4 +1,4 @@
-import {nextStateCell, initGridSpace} from './game-of-life';
+import {nextStateCell, initGridSpace, addAliveCells} from './game-of-life';
 
 describe('Cells', () => {
     describe('Any live cell with fewer than two live neighbours dies, as if by underpopulation.', () => {
@@ -54,21 +54,42 @@ describe('Cells', () => {
 
 describe('The Grid', () => {
     describe('grid can initial space', () => {
-        const width: number = 100
-        const height: number = 100
+        const width: number = 5
+        const height: number = 5
         const grid: boolean[][] = initGridSpace(width, height)
 
         it('gird size should be width * height ', function () {
-            const gridSize: number = grid.reduce((size, rows) => rows.length, 0)
+            const gridSize: number = grid.reduce((size, row) => size + row.length, 0)
 
             expect(gridSize).toBe(width * height)
         })
 
         it('every cells on new grid is dead by default.', function () {
             const isAllDead: boolean = grid.reduce((isDead, rows) => rows.every(row => row == false), true)
-            
+
             expect(isAllDead).toBeTruthy
         })
+    })
+
+    describe('can create alive cells to the grid.', () => {
+        const width: number = 5
+        const height: number = 5
+        const initGrid: boolean[][] = initGridSpace(width, height)
+
+        it('should ', function () {
+            const aliveCells: any[] = [[0, 0], [0, 1]]
+            const grid: boolean[][] = addAliveCells(initGrid, aliveCells)
+
+            const aliveCellsCount: number = grid.reduce((count, row) => count + row.filter((cell) => cell).length, 0)
+            expect(aliveCellsCount).toBe(aliveCells.length)
+        })
+
+    })
+
+    describe('grid can change cell state', () => {
+        const width: number = 100
+        const height: number = 100
+        const grid: boolean[][] = initGridSpace(width, height)
     })
 })
 
