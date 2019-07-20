@@ -71,12 +71,19 @@ describe('The Grid', () => {
     })
 
     describe('can create alive cells to the grid.', () => {
-        it('should ', function () {
+        it('grid should have alive cell equal aliveCells.length', function () {
             const aliveCells: any[] = [[0, 0], [0, 1]]
             const grid: boolean[][] = addAliveCells(gridInit, aliveCells)
 
             const aliveCellsCount: number = grid.reduce((count, row) => count + row.filter((cell) => cell).length, 0)
             expect(aliveCellsCount).toBe(aliveCells.length)
+        })
+
+        it('specific cell location should be alive', () => {
+            const aliveCell: any[] = [[2, 3]]
+            const grid: boolean[][] = addAliveCells(gridInit, aliveCell)
+
+            expect(grid[2][3]).toBeTruthy()
         })
     })
 
