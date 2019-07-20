@@ -53,40 +53,34 @@ describe('Cells', () => {
 })
 
 describe('The Grid', () => {
-    describe('grid can initial space', () => {
-        const width: number = 5
-        const height: number = 5
-        const grid: boolean[][] = initGridSpace(width, height)
+    const width: number = 10000
+    const height: number = 10000
+    const gridInit: boolean[][] = initGridSpace(width, height)
+    const griSize = (grid: boolean[][]) => grid.reduce((size, row) => size + row.length, 0)
 
+    describe('grid can initial the space', () => {
         it('gird size should be width * height ', function () {
-            const gridSize: number = grid.reduce((size, row) => size + row.length, 0)
-
-            expect(gridSize).toBe(width * height)
+            expect(griSize(gridInit)).toBe(width * height)
         })
 
         it('every cells on new grid is dead by default.', function () {
-            const isAllDead: boolean = grid.reduce((isDead, rows) => rows.every(row => row == false), true)
+            const isAllDead: boolean = gridInit.reduce((isDead, rows) => rows.every(row => row == false), true)
 
-            expect(isAllDead).toBeTruthy
+            expect(isAllDead).toBeTruthy()
         })
     })
 
     describe('can create alive cells to the grid.', () => {
-        const width: number = 5
-        const height: number = 5
-        const initGrid: boolean[][] = initGridSpace(width, height)
-
         it('should ', function () {
             const aliveCells: any[] = [[0, 0], [0, 1]]
-            const grid: boolean[][] = addAliveCells(initGrid, aliveCells)
+            const grid: boolean[][] = addAliveCells(gridInit, aliveCells)
 
             const aliveCellsCount: number = grid.reduce((count, row) => count + row.filter((cell) => cell).length, 0)
             expect(aliveCellsCount).toBe(aliveCells.length)
         })
-
     })
 
-    describe('grid can change cell state', () => {
+    describe('grid can change state cell.', () => {
         const width: number = 100
         const height: number = 100
         const grid: boolean[][] = initGridSpace(width, height)
